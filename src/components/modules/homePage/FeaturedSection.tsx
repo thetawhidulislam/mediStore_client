@@ -48,7 +48,7 @@ export default function FeaturedMedicines({ medicines }: Props) {
           {(medicines ?? []).map((med) => (
             <Link
               key={med.id}
-              href={`/medicine/${med.id}`}
+              href={`/shop/${med.id}`}
               className="group relative"
             >
               <Card className="h-full overflow-hidden rounded-2xl border border-muted/60 bg-background/70 p-4 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg">

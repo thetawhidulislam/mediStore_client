@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react"; // Imported ShoppingCart
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
@@ -120,6 +120,14 @@ const Navbar1 = ({
 
           {/* Auth / User */}
           <div className="flex items-center gap-4">
+            {/* Desktop Cart Icon */}
+            <a
+              href="/cart"
+              className="p-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+            >
+              <ShoppingCart className="w-6 h-6" />
+            </a>
+
             {userInfo?.name ? (
               <div className="relative group">
                 <img
@@ -183,6 +191,11 @@ const Navbar1 = ({
 
           {/* Right side: Profile + Hamburger */}
           <div className="flex items-center gap-3">
+            {/* Mobile Cart Icon */}
+            <a href="/cart" className="p-2 text-gray-700 dark:text-gray-200">
+              <ShoppingCart className="w-6 h-6" />
+            </a>
+
             {userInfo?.name && (
               <img
                 src={userInfo.image || "/default-avatar.png"}

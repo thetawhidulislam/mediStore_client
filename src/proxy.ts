@@ -11,7 +11,6 @@ export async function proxy(request: NextRequest) {
 
   const { data } = await userService.getSession();
 
-
   if (data) {
     isAuthenticated = true;
     isAdmin = data.user.role === Roles.admin;
@@ -28,7 +27,24 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
   if (isCustomer && pathname.startsWith("/dashobard")) {
-    return NextResponse.redirect(new URL("/customer-dashboard/profile", request.url));
+    return NextResponse.redirect(
+      new URL("/customer-dashboard/profile", request.url),
+    );
+  }
+  if (isCustomer && pathname.startsWith("/profile")) {
+    return NextResponse.redirect(
+      new URL("/customer-dashboard/profile", request.url),
+    );
+  }
+  if (isSeller && pathname.startsWith("/profile")) {
+    return NextResponse.redirect(
+      new URL("/seller-dashboard/profile", request.url),
+    );
+  }
+  if (isAdmin && pathname.startsWith("/profile")) {
+    return NextResponse.redirect(
+      new URL("/admin-dashboard/profile", request.url),
+    );
   }
   if (isAdmin && pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/admin-dashboard", request.url));
@@ -53,6 +69,8 @@ export const config = {
     "/order/:path*",
     "/dashboard",
     "/dashboard/:path*",
+    "/profile",
+    "/profile/:path*",
     "/seller-dashboard",
     "/seller-dashboard/:path*",
     "/admin-dashboard",

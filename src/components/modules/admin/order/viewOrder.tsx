@@ -29,7 +29,7 @@ export default function ViewOrder({ data }: Props) {
         </div>
 
         <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-green-100 text-green-700 w-fit">
-          {order?.status}
+          {order?.paymentStatus}
         </span>
       </div>
 

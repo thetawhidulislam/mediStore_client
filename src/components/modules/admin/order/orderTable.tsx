@@ -21,8 +21,9 @@ type Props = {
   userRole: "CUSTOMER" | "SELLER" | "ADMIN";
 };
 
-enum Status {
+enum paymentStatus {
   PENDING = "PENDING",
+  PAID = "PAID",
   APPROVED = "APPROVED",
   PROCESSING = "PROCESSING",
   SHIPPED = "SHIPPED",
@@ -33,15 +34,15 @@ enum Status {
 export default function OrderTable({ data, userRole }: Props) {
   const orders = data ?? [];
   const [loadingId, setLoadingId] = useState<string | null>(null);
-
-  const handleStatusChange = async (orderId: string, status: Status) => {
-    if (!confirm(`Change status to ${status}?`)) return;
+  console.log(data);
+  const handleStatusChange = async (orderId: string, status: paymentStatus) => {
+    if (!confirm(`Change status to ${paymentStatus}?`)) return;
 
     setLoadingId(orderId);
     const toastId = toast.loading("Updating status...");
 
     try {
-      const res = await updateOrder(orderId, { status });
+      const res = await updateOrder(orderId, { paymentStatus: status });
       res?.error
         ? toast.error("Update failed", { id: toastId })
         : toast.success("Status updated", { id: toastId });
@@ -93,8 +94,10 @@ export default function OrderTable({ data, userRole }: Props) {
                   0,
                 );
 
-                const isDelivered = order.status === Status.SHIPPED;
-                const isCanceled = order.status === Status.CANCEL;
+                const isDelivered =
+                  order.paymentStatus === paymentStatus.SHIPPED;
+                const isPaid = order.paymentStatus === paymentStatus.PAID;
+                const isCanceled = order.paymentStatus === paymentStatus.CANCEL;
 
                 return (
                   <TableRow key={order.id}>
@@ -106,7 +109,7 @@ export default function OrderTable({ data, userRole }: Props) {
                     )}
 
                     {/* MEDICINE NAMES */}
-                    <TableCell className="max-w-[220px]">
+                    <TableCell className="max-w-55">
                       <ul className="space-y-1 text-sm">
                         {order?.orderItems?.map((item) => (
                           <li key={item.id} className="truncate">
@@ -124,7 +127,7 @@ export default function OrderTable({ data, userRole }: Props) {
                     <TableCell className="flex items-center gap-2">
                       <Store size={16} />
                       <span className="capitalize font-medium">
-                        {order.status}
+                        {order.paymentStatus}
                       </span>
                     </TableCell>
 
@@ -133,7 +136,7 @@ export default function OrderTable({ data, userRole }: Props) {
                       {/* CUSTOMER */}
                       {userRole === "CUSTOMER" && (
                         <>
-                          {!isCanceled && !isDelivered && (
+                          {!isCanceled && !isDelivered && !isPaid && (
                             <Button
                               size="sm"
                               variant="outline"
@@ -142,7 +145,7 @@ export default function OrderTable({ data, userRole }: Props) {
                               onClick={() =>
                                 handleStatusChange(
                                   order.id as string,
-                                  Status.CANCEL,
+                                  paymentStatus.CANCEL,
                                 )
                               }
                             >
@@ -171,17 +174,17 @@ export default function OrderTable({ data, userRole }: Props) {
                       {userRole === "SELLER" && (
                         <select
                           className="border rounded px-2 py-1 text-sm capitalize"
-                          value={order.status}
+                          value={order.paymentStatus}
                           disabled={loadingId === order.id}
                           onChange={(e) =>
                             handleStatusChange(
                               order.id as string,
-                              e.target.value as Status,
+                              e.target.value as paymentStatus,
                             )
                           }
                         >
-                          {Object.values(Status)
-                            .filter((s) => s !== Status.CANCEL)
+                          {Object.values(paymentStatus)
+                            .filter((s) => s !== paymentStatus.CANCEL)
                             .map((status) => (
                               <option key={status} value={status}>
                                 {status}

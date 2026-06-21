@@ -16,13 +16,15 @@ export type Order = {
   customer?: Customer;
   paymentGateway?: string;
   totalPrice?: number;
-  status?:
+  paymentStatus?:
     | "PENDING"
     | "APPROVED"
     | "REJECTED"
     | "CANCEL"
     | "PROCESSING"
+    | "PAID"
     | "SHIPPED";
+
   orderItems?: OrderItem[];
   shippingAddress?: string;
 };
@@ -49,7 +51,14 @@ export type SingleOrder = {
   customer: CustomerDetails;
   paymentGateway: string;
   totalPrice: number;
-  status: "PENDING" | "PAID" | "CANCELLED" | "DELIVERED";
+  paymentStatus:
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED"
+    | "CANCEL"
+    | "PROCESSING"
+    | "SHIPPED"
+    | "PAID";
   orderItems: OrderItemDetails[];
   shippingAddress: string;
   orderDate: string;
@@ -57,9 +66,16 @@ export type SingleOrder = {
   data?: {
     id: string;
     customer: CustomerDetails;
-    paymentGateway: string ;
-    totalPrice: number ;
-    status: "PENDING" | "PAID" | "CANCELLED" | "DELIVERED";
+    paymentGateway: string;
+    totalPrice: number;
+    paymentStatus:
+      | "PENDING"
+      | "APPROVED"
+      | "REJECTED"
+      | "CANCEL"
+      | "PROCESSING"
+      | "SHIPPED"
+      | "PAID";
     orderItems: OrderItemDetails[];
     shippingAddress: string;
     orderDate: string;
