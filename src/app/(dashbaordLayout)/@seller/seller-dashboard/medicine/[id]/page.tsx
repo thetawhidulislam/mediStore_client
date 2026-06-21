@@ -1,6 +1,6 @@
 import { getCategory } from "@/action/category.action";
 import { getMedicinesById } from "@/action/medicine.action";
-import  UpdateMedicine  from "@/components/modules/admin/UpdateMedicine";
+import { UpdateMedicine } from "@/components/modules/admin/UpdateMedicine";
 
 import { userService } from "@/services/user.services";
 
