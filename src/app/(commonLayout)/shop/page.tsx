@@ -6,8 +6,8 @@ export default async function MedicineShopPage() {
   const { data: medicine } = await getMedicines();
   const { data: categories } = await getCategory();
 
-  const medicineData = medicine.data;
-  const categoriesData = categories.data;
+  const medicineData = medicine?.data;
+  const categoriesData = categories?.data;
 
   return (
     <div className="mx-auto max-w-7xl px-4">

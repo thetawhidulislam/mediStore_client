@@ -1,4 +1,5 @@
-import { UpdateMedicine } from "@/components/modules/admin/UpdateMedicine";
+import { UpdateMedicine } from "../../../../../../components/modules/admin/UpdateMedicine";
+
 import { getCategory } from "@/action/category.action";
 import { getMedicinesById } from "@/action/medicine.action";
 
