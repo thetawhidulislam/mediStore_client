@@ -50,7 +50,8 @@ export default function MedicineDetailsPage({ medicine, user }: Props) {
       } else {
         toast.success("Added to cart successfully", { id: toastId });
       }
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error :any ) {
       toast.error("Something went wrong", { id: toastId });
     }
   };
