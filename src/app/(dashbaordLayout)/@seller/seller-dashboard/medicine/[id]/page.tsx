@@ -2,6 +2,7 @@ import { getCategory } from "@/action/category.action";
 import { getMedicinesById } from "@/action/medicine.action";
 import { UpdateMedicine } from "@/components/modules/admin/UpdateMedicine";
 
+
 import { userService } from "@/services/user.services";
 
 export default async function UpdateMedicinePage({
@@ -9,7 +10,7 @@ export default async function UpdateMedicinePage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
 
   const { data } = await getMedicinesById(id);
 
@@ -20,7 +21,7 @@ export default async function UpdateMedicinePage({
   }
   const { data: category } = await getCategory();
 
-  const categories = category?.data;
+  const categories = category?.data ?? [];
 
   const userId = userSession?.user?.id as string;
   return (

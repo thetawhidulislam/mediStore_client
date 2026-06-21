@@ -1,5 +1,4 @@
 "use server";
-
 import { MedicineData } from "@/constants/MedicineData";
 import { MedicineService } from "@/services/medicine.services";
 import { updateTag } from "next/cache";
@@ -13,6 +12,7 @@ export const getMedicinesById = async (id: string) => {
 export const getMedicineBySeller = async (id: string) => {
   return await MedicineService.getMedicineBySeller(id);
 };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createMedicinePost = async (data: any) => {
   const res = await MedicineService.createMedicinePost(data);
 
@@ -26,9 +26,8 @@ export const deleteMedicine = async (id: string) => {
   }
   return res;
 };
-export const updateMedicinet = async (id: string, data: MedicineData) => {
+export const updateMedicine = async (id: string, data: MedicineData) => {
   const res = await MedicineService.updateMedicine(id, data);
- 
 
   updateTag("Medicine");
   return res;

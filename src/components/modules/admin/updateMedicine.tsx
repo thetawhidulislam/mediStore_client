@@ -1,6 +1,6 @@
 "use client";
 
-import { updateMedicinet } from "@/action/medicine.action";
+import { updateMedicine } from "@/action/medicine.action";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -87,10 +87,7 @@ export function UpdateMedicine({ data, categories }: UpdateMedicineProps) {
 
       try {
         if (value) {
-          const res = await updateMedicinet(
-            medicineData?.id as string,
-            payload,
-          );
+          const res = await updateMedicine(medicineData?.id as string, payload);
 
           if (res.error) {
             toast.error("Something went wrong", { id: toastId });
