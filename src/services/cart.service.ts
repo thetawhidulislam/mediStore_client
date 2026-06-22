@@ -56,7 +56,7 @@ export const CartService = {
     } catch (error) {
       return {
         data: null,
-        error: { message: "something went wrong", error },
+        error: { message: "something went wrongs", error },
       };
     }
   },
