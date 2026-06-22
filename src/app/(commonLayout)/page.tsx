@@ -2,6 +2,7 @@ import { getMedicines } from "@/action/medicine.action";
 import AboutSection from "@/components/modules/homePage/aboutSection";
 import CategoriesSection from "@/components/modules/homePage/categoriesSection";
 import FeaturedMedicines from "@/components/modules/homePage/FeaturedSection";
+
 import Footer from "@/components/modules/homePage/Footer";
 import HeroSection from "@/components/modules/homePage/heroSection";
 import { Medicine } from "@/constants/MedicineData";
@@ -14,8 +15,11 @@ export default async function home() {
   });
   const { data: medicine } = await getMedicines();
 
-  const medicineData = medicine?.data;
-  const recent = medicineData
+  const medicineData: Medicine[] = Array.isArray(medicine?.data)
+    ? medicine?.data
+    : [];
+
+  const recent = [...medicineData]
     .sort(
       (a: Medicine, b: Medicine) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),

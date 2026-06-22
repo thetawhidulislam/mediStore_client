@@ -78,7 +78,7 @@ export type Medicine = {
   sellerId: string;
   createdAt: string;
   updatedAt: string;
-  reviews: Review[];
+  reviews?: Review[];
   seller: Seller;
   _count: {
     reviews: number;

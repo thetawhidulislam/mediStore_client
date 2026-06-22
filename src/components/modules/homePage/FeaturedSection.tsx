@@ -7,12 +7,12 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 
 export type Medicine = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: string | number;
   image: string;
-  review: number;
+  review?: number;
 };
 
 type Props = {
