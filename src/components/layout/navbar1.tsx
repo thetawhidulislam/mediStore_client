@@ -28,6 +28,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { authClient } from "@/lib/auth-client";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 interface MenuItem {
   title: string;
@@ -119,11 +120,13 @@ const Navbar1 = ({
           </div>
 
           {/* Auth / User */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+
             {/* Desktop Cart Icon */}
             <a
               href="/cart"
-              className="p-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+              className="p-2 text-foreground hover:text-primary dark:hover:text-primary transition"
             >
               <ShoppingCart className="w-6 h-6" />
             </a>
@@ -159,7 +162,7 @@ const Navbar1 = ({
                         console.error("Logout failed:", error);
                       }
                     }}
-                    className=" block px-4 py-2  hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm text-red-600 dark:text-red-400 hover:underline"
+                    className=" block px-4 py-2  hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm text-destructive hover:underline"
                   >
                     Logout
                   </button>
@@ -191,6 +194,8 @@ const Navbar1 = ({
 
           {/* Right side: Profile + Hamburger */}
           <div className="flex items-center gap-3">
+            <ThemeToggle />
+
             {/* Mobile Cart Icon */}
             <a href="/cart" className="p-2 text-gray-700 dark:text-gray-200">
               <ShoppingCart className="w-6 h-6" />
@@ -231,7 +236,7 @@ const Navbar1 = ({
                         </span>
                         <a
                           href="/dashboard"
-                          className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                          className="text-sm text-primary hover:underline"
                         >
                           Dashboard
                         </a>
@@ -244,7 +249,7 @@ const Navbar1 = ({
                               console.error("Logout failed:", error);
                             }
                           }}
-                          className="text-sm text-red-600 dark:text-red-400 hover:underline"
+                          className="text-sm text-destructive hover:underline"
                         >
                           Logout
                         </button>
@@ -332,7 +337,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
     <a
       key={item.title}
       href={item.url}
-      className="text-md font-semibold py-2 block hover:text-blue-600 dark:hover:text-blue-400 transition"
+      className="text-md font-semibold py-2 block hover:text-primary transition"
     >
       {item.title}
     </a>

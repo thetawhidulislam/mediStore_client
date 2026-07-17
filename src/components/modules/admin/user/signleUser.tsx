@@ -53,8 +53,8 @@ export default async function UserDetailsPage({ user }: { user: User }) {
             <Badge
               className={
                 user.status === "ACTIVE"
-                  ? "bg-green-100 text-green-800"
-                  : "bg-red-100 text-red-800"
+                  ? "bg-secondary/10 text-secondary"
+                  : "bg-destructive/10 text-destructive"
               }
             >
               {user.status}

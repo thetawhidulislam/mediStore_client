@@ -129,8 +129,8 @@ export default function CartPage({ cartInfo }: CartPageProps) {
   if (cart.length === 0 || !cart[0]) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-6">
-          <ShoppingBag className="w-12 h-12 text-blue-400" />
+        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+          <ShoppingBag className="w-12 h-12 text-primary" />
         </div>
         <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
         <p className="text-gray-500 mb-8">Add some medicines to get started!</p>
@@ -193,7 +193,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
                         variant="ghost"
                         size="icon"
                         onClick={() => removeItem(item.id)}
-                        className="text-gray-400 hover:text-red-500"
+                        className="text-muted-foreground hover:text-destructive"
                       >
                         <Trash2 className="w-5 h-5" />
                       </Button>
@@ -253,7 +253,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
 
         {/* Order Summary */}
         <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-blue-100 p-6 sticky top-6">
+          <div className="bg-gradient-to-br from-primary/10 to-background rounded-2xl border border-primary/20 p-6 sticky top-6">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center">
                 {cart.length}
@@ -275,7 +275,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
 
             {/* Total */}
             <div className="mb-6">
-              <div className="flex justify-between items-center py-4 border-t border-b border-blue-200">
+              <div className="flex justify-between items-center py-4 border-t border-b border-primary/20">
                 <span className="text-lg font-bold">Total</span>
                 <div className="text-right">
                   <div className="text-3xl font-bold text-primary">

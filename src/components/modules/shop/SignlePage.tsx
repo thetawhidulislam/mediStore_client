@@ -67,11 +67,11 @@ export default function MedicineDetailsPage({ medicine, user }: Props) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "available":
-        return "bg-green-100 text-green-800 border-green-200";
+        return "bg-secondary/10 text-secondary border-secondary/20";
       case "low stock":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+        return "bg-accent/10 text-accent border-accent/20";
       case "out of stock":
-        return "bg-red-100 text-red-800 border-red-200";
+        return "bg-destructive/10 text-destructive border-destructive/20";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
@@ -97,7 +97,7 @@ export default function MedicineDetailsPage({ medicine, user }: Props) {
             >
               <Heart
                 className={`w-5 h-5 ${
-                  isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
+                  isFavorite ? "text-destructive fill-destructive" : "text-gray-600"
                 }`}
               />
             </button>

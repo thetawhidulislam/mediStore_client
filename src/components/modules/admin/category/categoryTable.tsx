@@ -115,9 +115,9 @@ export default function CategoryTable({ data }: Props) {
                           <Button
                             size="icon"
                             variant="outline"
-                            className="hover:border-blue-500"
+                            className="hover:border-primary"
                           >
-                            <Pencil className="h-5 w-5 text-blue-500" />
+                            <Pencil className="h-5 w-5 text-primary" />
                           </Button>
                         </Link>
 

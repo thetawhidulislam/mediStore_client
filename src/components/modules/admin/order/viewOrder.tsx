@@ -28,9 +28,20 @@ export default function ViewOrder({ data }: Props) {
           </p>
         </div>
 
-        <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-green-100 text-green-700 w-fit">
-          {order?.paymentStatus}
-        </span>
+        <div className="flex gap-2">
+          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-primary/10 text-primary w-fit">
+            {order?.status}
+          </span>
+          <span
+            className={`px-4 py-1.5 rounded-full text-sm font-medium w-fit ${
+              order?.paymentStatus === "PAID"
+                ? "bg-secondary/10 text-secondary"
+                : "bg-accent/10 text-accent"
+            }`}
+          >
+            {order?.paymentStatus}
+          </span>
+        </div>
       </div>
 
       {/* Customer + Order Info */}

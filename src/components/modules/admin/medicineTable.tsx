@@ -155,7 +155,7 @@ export default function MedicineTable({ data, userRole }: MedicineTableProps) {
                         </div>
                         <div className="w-32 h-1.5 bg-muted rounded-full overflow-hidden">
                           <div
-                            className={`h-full ${medicine.stock > 20 ? "bg-emerald-500" : "bg-orange-500"}`}
+                            className={`h-full ${medicine.stock > 20 ? "bg-secondary" : "bg-accent"}`}
                             style={{
                               width: `${Math.min(medicine.stock, 100)}%`,
                             }}

@@ -63,11 +63,11 @@ export default function ProfilePageData({ user }: { user: User }) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "active":
-        return "bg-green-100 text-green-800";
+        return "bg-secondary/10 text-secondary";
       case "inactive":
-        return "bg-red-100 text-red-800";
+        return "bg-destructive/10 text-destructive";
       case "pending":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-accent/10 text-accent";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -112,12 +112,12 @@ export default function ProfilePageData({ user }: { user: User }) {
                   <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
                     {user?.emailVerified ? (
                       <>
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-secondary" />
                         <span>Email Verified</span>
                       </>
                     ) : (
                       <>
-                        <Shield className="w-4 h-4 text-amber-500" />
+                        <Shield className="w-4 h-4 text-accent" />
                         <span>Email Not Verified</span>
                       </>
                     )}
@@ -193,8 +193,8 @@ export default function ProfilePageData({ user }: { user: User }) {
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Email */}
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                        <Mail className="w-5 h-5 text-blue-600" />
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <Mail className="w-5 h-5 text-primary" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Email Address</p>
@@ -207,8 +207,8 @@ export default function ProfilePageData({ user }: { user: User }) {
 
                     {/* Phone */}
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                        <Phone className="w-5 h-5 text-green-600" />
+                      <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+                        <Phone className="w-5 h-5 text-secondary" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Phone Number</p>
@@ -222,8 +222,8 @@ export default function ProfilePageData({ user }: { user: User }) {
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Member Since */}
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
-                        <Calendar className="w-5 h-5 text-amber-600" />
+                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                        <Calendar className="w-5 h-5 text-accent" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Member Since</p>
@@ -235,8 +235,8 @@ export default function ProfilePageData({ user }: { user: User }) {
 
                     {/* Last Updated */}
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
-                        <CreditCard className="w-5 h-5 text-purple-600" />
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <CreditCard className="w-5 h-5 text-primary" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Last Updated</p>
@@ -276,8 +276,8 @@ export default function ProfilePageData({ user }: { user: User }) {
                     <Badge
                       className={
                         user.emailVerified
-                          ? "bg-green-100 text-green-800"
-                          : "bg-amber-100 text-amber-800"
+                          ? "bg-secondary/10 text-secondary"
+                          : "bg-accent/10 text-accent"
                       }
                     >
                       {user.emailVerified ? "Verified" : "Pending"}
@@ -308,8 +308,8 @@ export default function ProfilePageData({ user }: { user: User }) {
                 <Card className="border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer h-full">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                        <ShoppingBag className="w-6 h-6 text-blue-600" />
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        <ShoppingBag className="w-6 h-6 text-primary" />
                       </div>
                       <div>
                         <h3 className="font-semibold">My Orders</h3>
@@ -326,8 +326,8 @@ export default function ProfilePageData({ user }: { user: User }) {
                 <Card className="border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer h-full">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                        <Package className="w-6 h-6 text-green-600" />
+                      <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
+                        <Package className="w-6 h-6 text-secondary" />
                       </div>
                       <div>
                         <h3 className="font-semibold">My Cart</h3>

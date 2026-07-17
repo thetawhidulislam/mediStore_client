@@ -97,7 +97,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
               Delivery Address
             </span>
             <textarea
-              className="mt-1 block w-full border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               rows={4}
               placeholder="Enter your full street address, apartment, city, and zip code"
               value={address}
@@ -114,7 +114,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
                 value="COD"
                 checked={paymentMethod === "COD"}
                 onChange={() => setPaymentMethod("COD")}
-                className="w-4 h-4 text-blue-600"
+                className="w-4 h-4 text-primary"
               />
               <span className="text-sm font-medium text-gray-800">
                 Cash on Delivery
@@ -128,7 +128,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
                 value="STRIPE"
                 checked={paymentMethod === "STRIPE"}
                 onChange={() => setPaymentMethod("STRIPE")}
-                className="w-4 h-4 text-blue-600"
+                className="w-4 h-4 text-primary"
               />
               <span className="text-sm font-medium text-gray-800">
                 Stripe (Card Payment)
@@ -138,7 +138,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-blue-50 p-6 rounded-xl shadow-sm self-start">
+        <div className="bg-primary/10 p-6 rounded-xl shadow-sm self-start">
           <h2 className="text-xl font-semibold mb-4 text-gray-900">
             Order Summary
           </h2>
@@ -167,7 +167,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
             ))}
           </div>
 
-          <div className="border-t border-blue-200 mt-4 pt-4 flex justify-between text-lg font-bold text-gray-900">
+          <div className="border-t border-primary/20 mt-4 pt-4 flex justify-between text-lg font-bold text-gray-900">
             <span>Total:</span>
             <span>${subtotal.toFixed(2)}</span>
           </div>
@@ -187,7 +187,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
 
           <Link
             href="/medicines"
-            className="block text-center mt-4 text-sm font-medium text-blue-600 hover:underline"
+            className="block text-center mt-4 text-sm font-medium text-primary hover:underline"
           >
             ← Continue Shopping
           </Link>

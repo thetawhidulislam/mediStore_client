@@ -109,8 +109,8 @@ export default function ReviewPage({ data }: Props) {
       <div className="max-w-md mx-auto px-4 py-20">
         <Card className="border-0 shadow-lg">
           <CardContent className="pt-10 text-center">
-            <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="w-10 h-10 text-green-600" />
+            <div className="w-20 h-20 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-secondary" />
             </div>
             <h2 className="text-2xl font-bold mb-3">Review Submitted!</h2>
             <p className="text-gray-600 mb-8">
@@ -361,16 +361,16 @@ export default function ReviewPage({ data }: Props) {
               </Card>
 
               {/* Help Text */}
-              <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+              <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                    <MessageSquare className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-blue-900 mb-1">
+                    <h4 className="font-medium text-primary mb-1">
                       Why your review matters
                     </h4>
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-primary/80">
                       Your feedback helps improve our products and assists other
                       customers in making informed healthcare decisions.
                     </p>

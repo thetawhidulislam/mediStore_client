@@ -73,8 +73,8 @@ export default function MedicineDetails({ data: medicine }: Props) {
               <span
                 className={`px-2 py-1 rounded-md font-medium ${
                   medicine.status === "ACTIVE"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
+                    ? "bg-secondary/10 text-secondary"
+                    : "bg-destructive/10 text-destructive"
                 }`}
               >
                 {medicine.status}

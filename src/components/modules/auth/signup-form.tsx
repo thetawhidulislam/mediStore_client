@@ -47,17 +47,15 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       onSubmit: signupSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("Creating CUSTOMER...");
+      const toastId = toast.loading("Creating account...");
       try {
         const { data, error } = await authClient.signUp.email(value);
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
         }
-        toast.success("User Created Successfully", { id: toastId });
-        router.push("/");
-
-        // router.push("/");
+        toast.success("Account created successfully", { id: toastId });
+        window.location.href = "/";
       } catch (err) {
         toast.error("Something went wrong, please try again", { id: toastId });
       }
@@ -65,9 +63,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   });
 
   return (
-    <Card {...props}>
-      <CardHeader>
-        <CardTitle>Create an account</CardTitle>
+    <Card {...props} className="shadow-lg border-border/60">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
         <CardDescription>
           Enter your information below to create your account
         </CardDescription>
@@ -82,13 +80,13 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           }}
         >
           <FieldGroup>
-            {/* Name */}
             <form.Field name="name">
               {(field) => (
                 <Field>
                   <FieldLabel htmlFor={field.name}>Name</FieldLabel>
                   <Input
                     id={field.name}
+                    placeholder="John Doe"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
@@ -97,7 +95,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               )}
             </form.Field>
 
-            {/* Email */}
             <form.Field name="email">
               {(field) => (
                 <Field>
@@ -105,6 +102,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   <Input
                     id={field.name}
                     type="email"
+                    placeholder="you@example.com"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
@@ -113,7 +111,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               )}
             </form.Field>
 
-            {/* Password */}
             <form.Field name="password">
               {(field) => (
                 <Field>
@@ -121,6 +118,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   <Input
                     id={field.name}
                     type="password"
+                    placeholder="••••••••"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
@@ -129,13 +127,13 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               )}
             </form.Field>
 
-            {/* Phone */}
             <form.Field name="phone">
               {(field) => (
                 <Field>
                   <FieldLabel htmlFor={field.name}>Phone</FieldLabel>
                   <Input
                     id={field.name}
+                    placeholder="01XXXXXXXXX"
                     value={field.state.value || ""}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
@@ -144,33 +142,34 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               )}
             </form.Field>
 
-            {/* Role */}
             <form.Field name="role">
               {(field) => (
                 <Field>
-                  <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>I want to</FieldLabel>
                   <select
                     id={field.name}
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    className="w-full rounded-md border border-input px-3 py-2"
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   >
-                    <option value="CUSTOMER">CUSTOMER</option>
-                    <option value="SELLER">SELLER</option>
+                    <option value="CUSTOMER">Buy medicines (Customer)</option>
+                    <option value="SELLER">Sell medicines (Seller)</option>
                   </select>
                   <FieldError errors={field.state.meta.errors} />
                 </Field>
               )}
             </form.Field>
 
-            {/* Image */}
             <form.Field name="image">
               {(field) => (
                 <Field>
-                  <FieldLabel htmlFor={field.name}>Image URL</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>
+                    Profile Image URL
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     type="url"
+                    placeholder="https://..."
                     value={field.state.value || ""}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
@@ -183,9 +182,19 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       </CardContent>
 
       <CardFooter className="flex flex-col gap-3 w-full justify-end">
-        <Button className="w-full" form="register-form" type="submit">
+        <Button
+          className="w-full bg-primary hover:bg-primary/90"
+          form="register-form"
+          type="submit"
+        >
           Register
         </Button>
+        <p className="text-sm text-muted-foreground text-center w-full">
+          Already have an account?{" "}
+          <a href="/login" className="text-primary font-medium hover:underline">
+            Login
+          </a>
+        </p>
       </CardFooter>
     </Card>
   );
