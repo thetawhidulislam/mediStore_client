@@ -10,7 +10,7 @@ export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-background">
       {/* subtle background gradient */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-muted/40 to-background" />
+      <div className="absolute inset-0 -z-10 bg-linear-to-b from-muted/40 to-background" />
 
       <div className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-5xl">

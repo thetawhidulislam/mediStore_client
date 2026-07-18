@@ -41,7 +41,7 @@ export default async function home() {
 
   const categoryCount = Array.isArray(data?.data) ? data.data.length : 0;
   return (
-    <div className="mx-auto max-w-7xl px-4">
+    <div className="mx-auto max-w-7xl px-4 z-1">
       <HeroSection />
       <AboutSection />
       <CategoriesSection categories={data?.data} />
