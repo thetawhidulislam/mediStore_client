@@ -106,7 +106,7 @@ const Navbar1 = ({
   return (
     <section
       className={cn(
-        "sticky top-0 z-50 w-full py-4 bg-white dark:bg-gray-900 shadow-sm",
+        "sticky top-0 z-50 w-full py-4 bg-card shadow-sm",
         className,
       )}
     >
@@ -124,7 +124,7 @@ const Navbar1 = ({
                 className="object-contain"
               />
 
-              <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+              <span className="text-xl font-bold text-foreground tracking-tight">
                 {logo.title}
               </span>
             </Link>
@@ -155,14 +155,14 @@ const Navbar1 = ({
                   alt={userInfo.name}
                   width={40}
                   height={40}
-                  className="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700 cursor-pointer object-cover"
+                  className="w-10 h-10 rounded-full border border-border cursor-pointer object-cover"
                 />
 
                 {/* Dropdown */}
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-20">
+                <div className="absolute right-0 mt-2 w-48 bg-card border border-border rounded-md shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-20">
                   <Link
                     href="/profile"
-                    className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="block px-4 py-2 text-foreground hover:bg-muted transition"
                   >
                     Profile
                   </Link>
@@ -176,7 +176,7 @@ const Navbar1 = ({
                         console.error("Logout failed:", error);
                       }
                     }}
-                    className=" block px-4 py-2  hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm text-destructive hover:underline"
+                    className="block px-4 py-2 hover:bg-muted transition text-sm text-destructive hover:underline"
                   >
                     Logout
                   </button>
@@ -213,7 +213,7 @@ const Navbar1 = ({
             {/* Mobile Cart Icon */}
             <Link
               href="/cart"
-              className="p-2 text-gray-700 hover:text-primary dark:text-gray-200 dark:hover:text-primary transition"
+              className="p-2 text-foreground hover:text-primary transition"
             >
               <ShoppingCart className="w-6 h-6" />
             </Link>
@@ -224,7 +224,7 @@ const Navbar1 = ({
                 alt={userInfo.name}
                 width={36}
                 height={36}
-                className="w-9 h-9 rounded-full border border-gray-200 dark:border-gray-700 object-cover"
+                className="w-9 h-9 rounded-full border border-border object-cover"
               />
             )}
 
@@ -250,7 +250,7 @@ const Navbar1 = ({
 
                     {userInfo?.name && (
                       <div className="flex flex-col items-end">
-                        <span className="text-gray-900 dark:text-white font-medium">
+                        <span className="text-foreground font-medium">
                           {userInfo.name}
                         </span>
                         <Link
@@ -315,7 +315,7 @@ const renderMenuItem = (item: MenuItem) => {
         <NavigationMenuTrigger className="text-foreground dark:text-white data-[state=open]:text-foreground dark:data-[state=open]:text-white">
           {item.title}
         </NavigationMenuTrigger>
-        <NavigationMenuContent className="bg-white dark:bg-gray-800 p-4 rounded-md shadow-md">
+        <NavigationMenuContent className="bg-card p-4 rounded-md shadow-md">
           {item.items.map((subItem) => (
             <NavigationMenuLink asChild key={subItem.title} className="w-80">
               <SubMenuLink item={subItem} />
@@ -331,7 +331,7 @@ const renderMenuItem = (item: MenuItem) => {
       <NavigationMenuLink asChild>
         <Link
           href={item.url}
-          className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-gray-100 hover:text-primary dark:text-white dark:hover:bg-gray-700 dark:hover:text-primary"
+          className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
         >
           {item.title}
         </Link>
@@ -370,18 +370,14 @@ const renderMobileMenuItem = (item: MenuItem) => {
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
   return (
     <Link
-      className="flex flex-row gap-3 items-start rounded-md p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+      className="flex flex-row gap-3 items-start rounded-md p-3 hover:bg-muted transition"
       href={item.url}
     >
-      {item.icon && (
-        <div className="text-gray-700 dark:text-gray-200">{item.icon}</div>
-      )}
+      {item.icon && <div className="text-muted-foreground">{item.icon}</div>}
       <div>
-        <div className="text-sm font-semibold text-gray-900 dark:text-white">
-          {item.title}
-        </div>
+        <div className="text-sm font-semibold text-foreground">{item.title}</div>
         {item.description && (
-          <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">
+          <p className="text-sm text-muted-foreground leading-snug">
             {item.description}
           </p>
         )}

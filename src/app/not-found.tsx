@@ -9,15 +9,15 @@ export default function NotFound() {
           Lost in the layout
         </p>
 
-        <h1 className="text-[clamp(5rem,18vw,9rem)] leading-none font-medium text-black">
+        <h1 className="text-[clamp(5rem,18vw,9rem)] leading-none font-medium text-foreground">
           404
         </h1>
 
-        <h2 className="mt-2 text-2xl md:text-3xl font-medium text-black">
+        <h2 className="mt-2 text-2xl md:text-3xl font-medium text-foreground">
           This page never made it to production.
         </h2>
 
-        <p className="mt-4 text-[#555] text-[17px] leading-relaxed">
+        <p className="mt-4 text-muted-foreground text-[17px] leading-relaxed">
           The page you&apos;re looking for was moved, renamed, or doesn&apos;t
           exist. Let&apos;s get you back to something that does.
         </p>
@@ -35,7 +35,7 @@ export default function NotFound() {
 
           <Link
             href="/#contact"
-            className="inline-flex items-center gap-2 px-7 py-2.5 border-2 border-[#e2e0e0] text-black text-[15px] font-medium
+            className="inline-flex items-center gap-2 px-7 py-2.5 border-2 border-border text-foreground text-[15px] font-medium
               rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:border-crimson hover:text-crimson"
           >
             Contact instead

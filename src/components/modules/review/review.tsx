@@ -97,7 +97,7 @@ export default function ReviewPage({ data }: Props) {
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
-          <p className="text-lg text-gray-600">Loading order details...</p>
+          <p className="text-lg text-muted-foreground">Loading order details...</p>
         </div>
       </div>
     );
@@ -113,7 +113,7 @@ export default function ReviewPage({ data }: Props) {
               <CheckCircle className="w-10 h-10 text-secondary" />
             </div>
             <h2 className="text-2xl font-bold mb-3">Review Submitted!</h2>
-            <p className="text-gray-600 mb-8">
+            <p className="text-muted-foreground mb-8">
               Thank you for sharing your experience. Your feedback helps other
               customers make informed decisions.
             </p>
@@ -133,17 +133,17 @@ export default function ReviewPage({ data }: Props) {
   );
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-10">
+    <div className="min-h-screen bg-linear-to-b from-muted to-background py-10">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
             <MessageSquare className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-3xl font-bold text-foreground mb-3">
             Share Your Feedback
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Your honest review helps others make better healthcare decisions
           </p>
         </div>
@@ -161,7 +161,7 @@ export default function ReviewPage({ data }: Props) {
               <CardContent className="space-y-6">
                 {/* Medicine Selection */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-foreground">
                     <div className="flex items-center gap-2 mb-2">
                       <Package className="w-4 h-4" />
                       Select Medicine
@@ -169,7 +169,7 @@ export default function ReviewPage({ data }: Props) {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all appearance-none"
+                      className="w-full border border-border rounded-xl bg-background px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all appearance-none"
                       value={medicineId}
                       onChange={(e) => setMedicineId(e.target.value)}
                     >
@@ -181,7 +181,7 @@ export default function ReviewPage({ data }: Props) {
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
                       <svg
-                        className="w-4 h-4 text-gray-400"
+                        className="w-4 h-4 text-muted-foreground"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -196,9 +196,9 @@ export default function ReviewPage({ data }: Props) {
                     </div>
                   </div>
                   {selectedMedicine && (
-                    <p className="text-sm text-gray-500">
-                      Reviewing:{" "}
-                      <span className="font-medium">
+                    <p className="text-sm text-muted-foreground">
+                      Reviewing: {" "}
+                      <span className="font-medium text-foreground">
                         {selectedMedicine.medicines.name}
                       </span>
                     </p>
@@ -207,7 +207,7 @@ export default function ReviewPage({ data }: Props) {
 
                 {/* Rating Section */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-foreground">
                     <div className="flex items-center gap-2 mb-2">
                       <Star className="w-4 h-4" />
                       Your Rating
@@ -228,16 +228,16 @@ export default function ReviewPage({ data }: Props) {
                             className={`${
                               star <= rating
                                 ? "fill-yellow-400 text-yellow-400"
-                                : "text-gray-300"
+                                : "text-muted-foreground/50"
                             } transition-colors`}
                           />
                         </button>
                       ))}
-                      <span className="ml-4 text-xl font-bold text-gray-800 bg-gray-100 px-3 py-1 rounded-lg">
+                      <span className="ml-4 text-xl font-bold text-foreground bg-muted px-3 py-1 rounded-lg">
                         {rating}.0
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-gray-500 px-2">
+                    <div className="flex justify-between text-sm text-muted-foreground px-2">
                       <span>Not satisfied</span>
                       <span>Excellent</span>
                     </div>
@@ -246,7 +246,7 @@ export default function ReviewPage({ data }: Props) {
 
                 {/* Comment Section */}
                 <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-foreground">
                     <div className="flex items-center gap-2 mb-2">
                       <MessageSquare className="w-4 h-4" />
                       Your Review
@@ -256,9 +256,9 @@ export default function ReviewPage({ data }: Props) {
                     placeholder="Tell us about your experience with this medicine. Was it effective? Did you experience any side effects? How was your overall satisfaction?"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="min-h-35 resize-none border-gray-300 rounded-xl focus:ring-2 focus:ring-primary"
+                    className="min-h-35 resize-none border-border rounded-xl focus:ring-2 focus:ring-primary"
                   />
-                  <div className="flex justify-between text-sm text-gray-500">
+                  <div className="flex justify-between text-sm text-muted-foreground">
                     <span>Be specific and honest about your experience</span>
                     <span>{comment.length}/1000 characters</span>
                   </div>
@@ -298,19 +298,19 @@ export default function ReviewPage({ data }: Props) {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Order ID:</span>
-                      <span className="font-medium">
+                      <span className="text-muted-foreground">Order ID:</span>
+                      <span className="font-medium text-foreground">
                         {order.id.slice(0, 8)}...
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Medicines:</span>
-                      <span className="font-medium">
+                      <span className="text-muted-foreground">Medicines:</span>
+                      <span className="font-medium text-foreground">
                         {order.orderItems.length}
                       </span>
                     </div>
                     <div className="pt-3 border-t">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-muted-foreground">
                         Thank you for purchasing from us. Your feedback is
                         valuable!
                       </p>
@@ -328,31 +328,31 @@ export default function ReviewPage({ data }: Props) {
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         Be honest about your experience
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         Include details about effectiveness
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         Mention any side effects noticed
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         Your review will help others
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         Reviews are publicly visible
                       </span>
                     </li>

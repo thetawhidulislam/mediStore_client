@@ -62,7 +62,7 @@ export default function HowItWorksPage() {
 
       <div className="relative">
         {/* connecting line, desktop only */}
-        <div className="absolute left-1/2 top-10 hidden h-[calc(100%-5rem)] w-px -translate-x-1/2 bg-border dark:bg-white/10 md:block" />
+        <div className="absolute left-1/2 top-10 hidden h-[calc(100%-5rem)] w-px -translate-x-1/2 bg-border dark:bg-border/50 md:block" />
 
         <div className="space-y-6">
           {steps.map((step, i) => {

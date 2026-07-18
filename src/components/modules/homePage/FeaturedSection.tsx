@@ -53,7 +53,7 @@ export default function FeaturedMedicines({ medicines }: Props) {
             >
               <Card className="h-full overflow-hidden rounded-2xl border border-border bg-background/70 p-4 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg dark:border-white/10">
                 {/* image container gets a solid backdrop so transparent PNGs don't look broken */}
-                <div className="relative h-48 w-full overflow-hidden rounded-lg bg-muted/50 dark:bg-white/90">
+                <div className="relative h-48 w-full overflow-hidden rounded-lg bg-muted/50 dark:bg-card/90">
                   <Image
                     src={med.image ?? "/default-med.png"}
                     alt={med.name ?? "Medicine"}

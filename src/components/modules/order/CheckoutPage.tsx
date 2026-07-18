@@ -89,15 +89,15 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Delivery Details & Payment Selection */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
           <h2 className="text-xl font-semibold mb-4">Delivery Details</h2>
 
           <label className="block mb-3">
-            <span className="text-gray-700 font-medium text-sm">
+            <span className="text-foreground font-medium text-sm">
               Delivery Address
             </span>
             <textarea
-              className="mt-1 block w-full border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="mt-1 block w-full border border-border rounded-lg bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               rows={4}
               placeholder="Enter your full street address, apartment, city, and zip code"
               value={address}
@@ -107,7 +107,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
 
           <h2 className="text-xl font-semibold mt-6 mb-3">Payment Method</h2>
           <div className="space-y-2">
-            <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+            <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-muted transition">
               <input
                 type="radio"
                 name="payment"
@@ -116,12 +116,12 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
                 onChange={() => setPaymentMethod("COD")}
                 className="w-4 h-4 text-primary"
               />
-              <span className="text-sm font-medium text-gray-800">
+              <span className="text-sm font-medium text-foreground">
                 Cash on Delivery
               </span>
             </label>
 
-            <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+            <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-muted transition">
               <input
                 type="radio"
                 name="payment"
@@ -130,7 +130,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
                 onChange={() => setPaymentMethod("STRIPE")}
                 className="w-4 h-4 text-primary"
               />
-              <span className="text-sm font-medium text-gray-800">
+              <span className="text-sm font-medium text-foreground">
                 Stripe (Card Payment)
               </span>
             </label>
@@ -139,7 +139,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
 
         {/* Order Summary */}
         <div className="bg-primary/10 p-6 rounded-xl shadow-sm self-start">
-          <h2 className="text-xl font-semibold mb-4 text-gray-900">
+          <h2 className="text-xl font-semibold mb-4 text-foreground">
             Order Summary
           </h2>
 
@@ -149,15 +149,15 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
                 key={item.id}
                 className="flex justify-between items-center text-sm"
               >
-                <div className="text-gray-700">
-                  <span className="font-medium text-gray-950">
+                <div className="text-muted-foreground">
+                  <span className="font-medium text-foreground">
                     {item.medicines?.name}
                   </span>
-                  <span className="text-gray-500 text-xs block">
+                  <span className="text-muted-foreground text-xs block">
                     Qty: {item.quantity}
                   </span>
                 </div>
-                <div className="font-semibold text-gray-900">
+                <div className="font-semibold text-foreground">
                   $
                   {(
                     (item.medicines?.price || 0) * (item.quantity || 0)
@@ -167,7 +167,7 @@ export default function CheckoutPage({ cartInfo }: CheckoutPageProps) {
             ))}
           </div>
 
-          <div className="border-t border-primary/20 mt-4 pt-4 flex justify-between text-lg font-bold text-gray-900">
+          <div className="border-t border-primary/20 mt-4 pt-4 flex justify-between text-lg font-bold text-foreground">
             <span>Total:</span>
             <span>${subtotal.toFixed(2)}</span>
           </div>

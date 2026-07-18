@@ -69,7 +69,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           return;
         }
         toast.success("Logged in successfully", { id: toastId });
-       
+
         window.location.href = "/";
       } catch (err) {
         toast.error("Something went wrong, please try again", { id: toastId });
@@ -176,7 +176,10 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
         </Button>
         <p className="text-sm text-muted-foreground text-center w-full">
           Don&apos;t have an account?{" "}
-          <a href="/signup" className="text-primary font-medium hover:underline">
+          <a
+            href="/signup"
+            className="text-primary font-medium hover:underline"
+          >
             Sign up
           </a>
         </p>

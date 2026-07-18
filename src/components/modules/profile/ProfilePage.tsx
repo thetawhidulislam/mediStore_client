@@ -69,7 +69,7 @@ export default function ProfilePageData({ user }: { user: User }) {
       case "pending":
         return "bg-accent/10 text-accent";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-foreground";
     }
   };
 

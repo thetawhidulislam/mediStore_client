@@ -133,7 +133,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
           <ShoppingBag className="w-12 h-12 text-primary" />
         </div>
         <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
-        <p className="text-gray-500 mb-8">Add some medicines to get started!</p>
+        <p className="text-muted-foreground mb-8">Add some medicines to get started!</p>
         <Button asChild size="lg">
           <Link href="/medicines">
             <ShoppingBag className="w-5 h-5 mr-2" />
@@ -150,7 +150,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-3">Your Cart</h1>
         <div className="w-20 h-1 bg-primary mx-auto"></div>
-        <p className="text-gray-500 mt-2">
+        <p className="text-muted-foreground mt-2">
           {cart.length} item{cart.length !== 1 ? "s" : ""} in your cart
         </p>
       </div>
@@ -162,11 +162,11 @@ export default function CartPage({ cartInfo }: CartPageProps) {
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-card rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex gap-4">
                   {/* Image */}
-                  <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-100 bg-white flex-shrink-0">
+                  <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-border bg-muted flex-shrink-0">
                     <Image
                       src={item.image}
                       alt={item.name}
@@ -185,7 +185,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
                         <h3 className="font-semibold text-lg mb-1">
                           {item.name}
                         </h3>
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-muted-foreground text-sm">
                           Medicine ID: {item.medicineId}
                         </p>
                       </div>
@@ -202,7 +202,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
                     <div className="flex items-center justify-between mt-6">
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-3">
-                        <span className="text-gray-600">Quantity:</span>
+                        <span className="text-muted-foreground">Quantity:</span>
                         <div className="flex items-center gap-2">
                           <Button
                             size="icon"
@@ -228,7 +228,7 @@ export default function CartPage({ cartInfo }: CartPageProps) {
 
                       {/* Item Total */}
                       <div className="text-right">
-                        <div className="text-gray-500 text-sm">Total</div>
+                        <div className="text-muted-foreground text-sm">Total</div>
                         <div className="text-xl font-bold text-primary">
                           $
                           {(Number(item.price) * Number(item.quantity)).toFixed(
@@ -264,11 +264,11 @@ export default function CartPage({ cartInfo }: CartPageProps) {
             {/* Summary Items */}
             <div className="space-y-4 mb-6">
               <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">Subtotal</span>
+                <span className="text-muted-foreground">Subtotal</span>
                 <span className="font-semibold">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">Items</span>
+                <span className="text-muted-foreground">Items</span>
                 <span className="font-semibold">{cart.length}</span>
               </div>
             </div>

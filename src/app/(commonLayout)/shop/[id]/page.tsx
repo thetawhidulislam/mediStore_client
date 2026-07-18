@@ -27,7 +27,6 @@ export default async function SigleShopPage({
   )
     .slice(0, 4);
     
-    console.log(relatedMedicines);
   return (
     <div className="mx-auto max-w-7xl px-4">
       <MedicineDetailsPage

@@ -206,8 +206,8 @@ export default function OrderTable({ data, userRole }: Props) {
                       <span
                         className={`ml-1 text-xs rounded-full px-2 py-0.5 ${
                           isPaid
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
+                            ? "bg-secondary/10 text-secondary"
+                            : "bg-accent/10 text-accent"
                         }`}
                       >
                         {order.paymentStatus}
@@ -230,7 +230,7 @@ export default function OrderTable({ data, userRole }: Props) {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="text-red-600 border-red-200 hover:bg-red-50"
+                              className="text-destructive border-destructive/20 hover:bg-destructive/10"
                               disabled={loadingId === order.id}
                               onClick={() =>
                                 handleStatusChange(
@@ -250,7 +250,7 @@ export default function OrderTable({ data, userRole }: Props) {
                             >
                               <Button
                                 size="sm"
-                                className="bg-green-600 hover:bg-green-700 text-white"
+                                className="bg-primary hover:bg-primary/90 text-primary-foreground"
                               >
                                 <Star size={16} className="mr-1" />
                                 Review
@@ -304,7 +304,7 @@ export default function OrderTable({ data, userRole }: Props) {
 
                       <Link href={getViewLink(order.id as string)}>
                         <Button size="icon" variant="outline">
-                          <Eye className="text-blue-600" size={16} />
+                          <Eye className="text-primary" size={16} />
                         </Button>
                       </Link>
                     </TableCell>

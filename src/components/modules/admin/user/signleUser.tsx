@@ -36,13 +36,19 @@ export default async function UserDetailsPage({ user }: { user: User }) {
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
       {/* Header */}
       <div className="flex items-center gap-6">
-        {/* <Image
-          src={user.image || "/placeholder.png"}
-          alt={user.name}
-          width={96}
-          height={96}
-          className="rounded-full border"
-        /> */}
+        {user.image ? (
+          <Image
+            src={user.image || "/placeholder.png"}
+            alt={user.name}
+            width={96}
+            height={96}
+            className="rounded-full border object-cover"
+          />
+        ) : (
+          <div className="flex h-24 w-24 items-center justify-center rounded-full border bg-muted text-lg font-semibold text-muted-foreground">
+            {user.name?.charAt(0)?.toUpperCase() || "U"}
+          </div>
+        )}
 
         <div>
           <h1 className="text-3xl font-bold">{user.name}</h1>
