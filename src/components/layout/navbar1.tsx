@@ -39,7 +39,7 @@ interface MenuItem {
 }
 
 interface Navbar1Props {
-  user?: { name: string; image?: string | null };
+  user?: { name: string; image?: string | null; role?: string };
   className?: string;
   logo?: {
     url: string;
@@ -62,6 +62,7 @@ interface Navbar1Props {
   userInfo?: {
     name: string;
     image?: string | null;
+    role?: string;
   };
 }
 
@@ -78,7 +79,8 @@ const Navbar1 = ({
     { title: "Home", url: "/" },
     { title: "Shop", url: "/shop" },
     { title: "Blog", url: "#" },
-    { title: "Dashboard", url: "/dashboard" },
+    // "Dashboard" ekhane rakhi nai — login thakle niche dynamically add hobe,
+    // logged-out user-ke ekta na-thaka route-e pathabo na
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -86,10 +88,24 @@ const Navbar1 = ({
   },
   className,
 }: Navbar1Props) => {
+  // Role onujayi thik dashboard route ber kori — "/dashboard" bole kono
+  // route-i nai, actual route gula "/admin-dashboard" ityadi
+  const dashboardUrl =
+    userInfo?.role === "ADMIN"
+      ? "/admin-dashboard"
+      : userInfo?.role === "SELLER"
+        ? "/seller-dashboard"
+        : "/customer-dashboard";
+
+  // User login thakle-i shudhu "Dashboard" menu item jog kori
+  const finalMenu = userInfo?.name
+    ? [...menu, { title: "Dashboard", url: dashboardUrl }]
+    : menu;
+
   return (
     <section
       className={cn(
-        "py-4 bg-white dark:bg-gray-900 shadow-sm z-50 relative",
+        "sticky top-0 z-50 py-4 bg-white shadow-sm dark:bg-gray-900",
         className,
       )}
     >
@@ -114,7 +130,7 @@ const Navbar1 = ({
 
             <NavigationMenu>
               <NavigationMenuList className="flex gap-4">
-                {menu.map((item) => renderMenuItem(item))}
+                {finalMenu.map((item) => renderMenuItem(item))}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -147,12 +163,7 @@ const Navbar1 = ({
                   >
                     Profile
                   </a>
-                  <a
-                    href="/settings"
-                    className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-                  >
-                    Settings
-                  </a>
+
                   <button
                     onClick={async () => {
                       try {
@@ -197,7 +208,10 @@ const Navbar1 = ({
             <ThemeToggle />
 
             {/* Mobile Cart Icon */}
-            <a href="/cart" className="p-2 text-gray-700 dark:text-gray-200">
+            <a
+              href="/cart"
+              className="p-2 text-gray-700 hover:text-primary dark:text-gray-200 dark:hover:text-primary transition"
+            >
               <ShoppingCart className="w-6 h-6" />
             </a>
 
@@ -235,7 +249,7 @@ const Navbar1 = ({
                           {userInfo.name}
                         </span>
                         <a
-                          href="/dashboard"
+                          href={dashboardUrl}
                           className="text-sm text-primary hover:underline"
                         >
                           Dashboard
@@ -265,7 +279,7 @@ const Navbar1 = ({
                     collapsible
                     className="flex flex-col gap-2"
                   >
-                    {menu.map((item) => renderMobileMenuItem(item))}
+                    {finalMenu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
 
                   {/* Auth Buttons if not logged in */}
@@ -293,7 +307,9 @@ const renderMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
       <NavigationMenuItem key={item.title}>
-        <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+        <NavigationMenuTrigger className="text-foreground dark:text-white data-[state=open]:text-foreground dark:data-[state=open]:text-white">
+          {item.title}
+        </NavigationMenuTrigger>
         <NavigationMenuContent className="bg-white dark:bg-gray-800 p-4 rounded-md shadow-md">
           {item.items.map((subItem) => (
             <NavigationMenuLink asChild key={subItem.title} className="w-80">
@@ -309,7 +325,7 @@ const renderMenuItem = (item: MenuItem) => {
     <NavigationMenuItem key={item.title}>
       <NavigationMenuLink
         href={item.url}
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-gray-100 hover:text-primary dark:text-white dark:hover:bg-gray-700 dark:hover:text-primary"
       >
         {item.title}
       </NavigationMenuLink>
@@ -337,7 +353,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
     <a
       key={item.title}
       href={item.url}
-      className="text-md font-semibold py-2 block hover:text-primary transition"
+      className="text-md font-semibold py-2 block text-foreground hover:text-primary transition dark:text-white dark:hover:text-primary"
     >
       {item.title}
     </a>

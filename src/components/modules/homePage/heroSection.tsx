@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, ShieldCheck, Truck, Stethoscope } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -36,10 +37,12 @@ export default function HeroSection() {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Button size="lg" className="gap-2">
-                    Browse Medicines
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                  <Link href={"/shop"}>
+                    <Button size="lg" className="gap-2 cursor-pointer">
+                      Browse Medicines
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
 
                   <Button size="lg" variant="outline">
                     How It Works

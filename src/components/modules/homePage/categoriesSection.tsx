@@ -44,13 +44,12 @@ export default function CategoriesSection({ categories }: Props) {
             <Card
               key={category.id}
               className="
-                  group h-full overflow-hidden rounded-2xl border border-muted/60
-                  bg-card/95 p-6 text-card-foreground backdrop-blur
+                  h-full overflow-hidden rounded-2xl border border-muted/60
+                  bg-background/70 p-6 backdrop-blur
                   transition-all duration-300
                   hover:-translate-y-1
                   hover:border-primary/50
                   hover:shadow-lg
-                  dark:border-white/20 dark:bg-white/95 dark:text-slate-900
                 "
             >
               {/* accent line */}
@@ -61,11 +60,11 @@ export default function CategoriesSection({ categories }: Props) {
                   {category.name}
                 </h3>
 
-                <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3 dark:text-slate-600">
+                <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3">
                   {category.description}
                 </p>
 
-                <span className="inline-block text-xs font-medium text-primary/80 opacity-0 transition-opacity group-hover:opacity-100 dark:text-primary">
+                <span className="inline-block text-xs font-medium text-primary/80 opacity-0 transition-opacity group-hover:opacity-100">
                   View medicines →
                 </span>
               </div>

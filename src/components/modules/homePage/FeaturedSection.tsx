@@ -51,7 +51,7 @@ export default function FeaturedMedicines({ medicines }: Props) {
               href={`/shop/${med.id}`}
               className="group relative"
             >
-              <Card className="group h-full overflow-hidden rounded-2xl border border-muted/60 bg-card/95 p-4 text-card-foreground backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg dark:border-white/20 dark:bg-white/95 dark:text-slate-900">
+              <Card className="h-full overflow-hidden rounded-2xl border border-muted/60 bg-background/70 p-4 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg">
                 <div className="relative h-48 w-full overflow-hidden rounded-lg">
                   <Image
                     src={med.image ?? "/default-med.png"}
@@ -66,7 +66,7 @@ export default function FeaturedMedicines({ medicines }: Props) {
                     {med.name ?? "Unnamed Medicine"}
                   </h3>
 
-                  <p className="text-sm text-muted-foreground dark:text-slate-600">
+                  <p className="text-sm text-muted-foreground">
                     {med.description
                       ? truncateWords(med.description, 20)
                       : "No description available"}
@@ -85,7 +85,7 @@ export default function FeaturedMedicines({ medicines }: Props) {
                     {med.price ?? "N/A"}
                   </div>
 
-                  <span className="inline-block mt-2 text-xs font-medium text-primary/80 opacity-0 transition-opacity group-hover:opacity-100 dark:text-primary">
+                  <span className="inline-block mt-2 text-xs font-medium text-primary/80 opacity-0 transition-opacity group-hover:opacity-100">
                     View details →
                   </span>
                 </div>
