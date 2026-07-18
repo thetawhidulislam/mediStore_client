@@ -49,20 +49,22 @@ export default function FeaturedMedicines({ medicines }: Props) {
             <Link
               key={med.id}
               href={`/shop/${med.id}`}
-              className="group relative"
+              className="group relative block"
             >
-              <Card className="h-full overflow-hidden rounded-2xl border border-muted/60 bg-background/70 p-4 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg">
-                <div className="relative h-48 w-full overflow-hidden rounded-lg">
+              <Card className="h-full overflow-hidden rounded-2xl border border-border bg-background/70 p-4 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg dark:border-white/10">
+                {/* image container gets a solid backdrop so transparent PNGs don't look broken */}
+                <div className="relative h-48 w-full overflow-hidden rounded-lg bg-muted/50 dark:bg-white/90">
                   <Image
                     src={med.image ?? "/default-med.png"}
                     alt={med.name ?? "Medicine"}
                     fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform group-hover:scale-105"
+                    style={{ objectFit: "contain" }}
+                    className="p-3 transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
+
                 <div className="mt-4 space-y-2">
-                  <h3 className="text-lg font-semibold group-hover:text-primary">
+                  <h3 className="text-lg font-semibold transition-colors group-hover:text-primary">
                     {med.name ?? "Unnamed Medicine"}
                   </h3>
 
@@ -72,22 +74,35 @@ export default function FeaturedMedicines({ medicines }: Props) {
                       : "No description available"}
                   </p>
 
-                  <div className="flex items-center gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${i < (med.review ?? 0) ? "text-yellow-400" : "text-muted-foreground"}`}
-                      />
-                    ))}
-                  </div>
+                  {/* only render stars when there's an actual review count, otherwise show a plain label */}
+                  {med.review && med.review > 0 ? (
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${
+                            i < med.review!
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-muted-foreground/30"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      No reviews yet
+                    </p>
+                  )}
 
-                  <div className="mt-1 font-medium text-primary">
-                    {med.price ?? "N/A"}
-                  </div>
+                  <div className="flex items-center justify-between pt-1">
+                    <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                      {med.price != null ? `৳${med.price}` : "N/A"}
+                    </span>
 
-                  <span className="inline-block mt-2 text-xs font-medium text-primary/80 opacity-0 transition-opacity group-hover:opacity-100">
-                    View details →
-                  </span>
+                    <span className="text-xs font-medium text-primary/80 opacity-0 transition-opacity group-hover:opacity-100">
+                      View details →
+                    </span>
+                  </div>
                 </div>
               </Card>
             </Link>

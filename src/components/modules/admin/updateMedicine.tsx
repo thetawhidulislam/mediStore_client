@@ -58,6 +58,7 @@ const medicineSchema = z.object({
 
 export function UpdateMedicine({ data, categories }: UpdateMedicineProps) {
   const medicineData = data?.data;
+
   const router = useRouter();
 
   const form = useForm({
