@@ -10,13 +10,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Link from "next/link";
 import { toast } from "sonner";
 import Image from "next/image";
 import { deleteUser, updateUserByAdmin } from "@/action/user.action";
-import { useState } from "react";
-
-/* ================= TYPES ================= */
+import { useMemo, useState } from "react";
 
 type UserRole = "ADMIN" | "CUSTOMER" | "SELLER";
 type UserStatus = "ACTIVE" | "INACTIVE";
@@ -34,12 +39,36 @@ type Props = {
   data: { data: User[] } | null;
 };
 
-/* ================= COMPONENT ================= */
+const ITEMS_PER_PAGE = 8;
 
 export default function UserTable({ data }: Props) {
   const [users, setUsers] = useState<User[]>(data?.data || []);
 
-  /* ================= DELETE ================= */
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [page, setPage] = useState(1);
+
+  const filteredUsers = useMemo(() => {
+    return users.filter((user) => {
+      const searchLower = search.toLowerCase();
+      const searchMatch =
+        search === "" ||
+        user.name?.toLowerCase().includes(searchLower) ||
+        user.phone?.toLowerCase().includes(searchLower);
+
+      const roleMatch = roleFilter === "all" || user.role === roleFilter;
+
+      return searchMatch && roleMatch;
+    });
+  }, [users, search, roleFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredUsers.length / ITEMS_PER_PAGE));
+  const paginatedUsers = filteredUsers.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE,
+  );
+
+  const resetToFirstPage = () => setPage(1);
 
   const handleDelete = async (id?: string) => {
     if (!id) return;
@@ -61,8 +90,6 @@ export default function UserTable({ data }: Props) {
       toast.error("Failed to delete user", { id: toastId });
     }
   };
-
-  /* ================= ROLE UPDATE ================= */
 
   const handleRoleUpdate = async (id: string, role: UserRole) => {
     if (
@@ -86,8 +113,6 @@ export default function UserTable({ data }: Props) {
       toast.error("Failed to update user role", { id: toastId });
     }
   };
-
-  /* ================= STATUS UPDATE ================= */
 
   const handleStatusUpdate = async (id: string, status: UserStatus) => {
     if (
@@ -116,7 +141,6 @@ export default function UserTable({ data }: Props) {
 
   return (
     <div className="w-full mx-auto px-6 py-10">
-      {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Users</h2>
@@ -126,7 +150,41 @@ export default function UserTable({ data }: Props) {
         </div>
       </div>
 
-      {/* Table */}
+      <div className="mb-4 flex flex-wrap gap-3 items-center">
+        <input
+          type="text"
+          placeholder="Search by name or phone..."
+          className="border rounded px-3 py-1.5 text-sm w-64"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            resetToFirstPage();
+          }}
+        />
+
+        <Select
+          onValueChange={(value) => {
+            setRoleFilter(value);
+            resetToFirstPage();
+          }}
+          defaultValue="all"
+        >
+          <SelectTrigger className="w-44">
+            <SelectValue placeholder="Filter by role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Roles</SelectItem>
+            <SelectItem value="ADMIN">Admin</SelectItem>
+            <SelectItem value="SELLER">Seller</SelectItem>
+            <SelectItem value="CUSTOMER">Customer</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <p className="text-sm text-muted-foreground ml-auto">
+          Showing {paginatedUsers.length} of {filteredUsers.length}
+        </p>
+      </div>
+
       <div className="rounded-2xl border shadow-md bg-card overflow-hidden">
         <div className="overflow-x-auto w-full">
           <Table>
@@ -145,22 +203,30 @@ export default function UserTable({ data }: Props) {
             </TableHeader>
 
             <TableBody>
-              {users.length ? (
-                users.map((user, index) => (
+              {paginatedUsers.length ? (
+                paginatedUsers.map((user, index) => (
                   <TableRow
                     key={user.id || index}
                     className="group h-16 hover:bg-muted/20"
                   >
-                    <TableCell className="text-center">{index + 1}</TableCell>
+                    <TableCell className="text-center">
+                      {(page - 1) * ITEMS_PER_PAGE + index + 1}
+                    </TableCell>
 
                     <TableCell>
-                      {/* <Image
-                        src={user.image || "/placeholder.png"}
-                        alt={user.name || "User"}
-                        width={40}
-                        height={40}
-                        className="rounded-full border"
-                      /> */}
+                      {user.image ? (
+                        <Image
+                          src={user.image}
+                          alt={user.name || "User"}
+                          width={40}
+                          height={40}
+                          className="rounded-full border object-cover"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-xs font-medium text-muted-foreground">
+                          {user.name?.[0] ?? "?"}
+                        </div>
+                      )}
                     </TableCell>
 
                     <TableCell className="font-medium">
@@ -198,8 +264,8 @@ export default function UserTable({ data }: Props) {
                         }
                         className={`px-3 py-1 rounded-full text-xs font-semibold uppercase ${
                           user.status === "ACTIVE"
-                            ? "bg-secondary/10 text-secondary"
-                            : "bg-destructive/10 text-destructive"
+                            ? "bg-secondary/20 text-secondary"
+                            : "bg-destructive/20 text-destructive"
                         }`}
                       >
                         <option value="ACTIVE">Active</option>
@@ -240,6 +306,39 @@ export default function UserTable({ data }: Props) {
           </Table>
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-6">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            Previous
+          </Button>
+
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <Button
+              key={i}
+              variant={page === i + 1 ? "default" : "outline"}
+              size="sm"
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

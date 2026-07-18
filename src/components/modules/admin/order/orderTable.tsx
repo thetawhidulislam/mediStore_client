@@ -10,9 +10,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Order } from "@/constants/OrdarData";
 import { updateOrder } from "@/action/order.action";
 
@@ -21,9 +28,6 @@ type Props = {
   userRole: "CUSTOMER" | "SELLER" | "ADMIN";
 };
 
-// ✅ Change 1: naam "paymentStatus" theke "OrderStatusEnum" korlam
-// (karon eta order-er lifecycle status, payment status na), ar "PAID" shorai disi
-// (PAID ekta payment concept, order status na)
 enum OrderStatusEnum {
   PENDING = "PENDING",
   APPROVED = "APPROVED",
@@ -33,24 +37,55 @@ enum OrderStatusEnum {
   CANCEL = "CANCEL",
 }
 
+const ITEMS_PER_PAGE = 8;
+
 export default function OrderTable({ data, userRole }: Props) {
   const orders = data ?? [];
   const [loadingId, setLoadingId] = useState<string | null>(null);
-  // ✅ Change 2: console.log(data) shore disi — production code e debug log rakha thik na
+
+  // ---- Filter state (notun) ----
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [page, setPage] = useState(1);
+
+  // ---- Filtered list (notun) ----
+  const filteredOrders = useMemo(() => {
+    return orders.filter((order) => {
+      const searchLower = search.toLowerCase();
+
+      // Customer naam OR medicine-er naam-e match korle dekhabo
+      const searchMatch =
+        search === "" ||
+        order.customer?.name?.toLowerCase().includes(searchLower) ||
+        order.orderItems?.some((item) =>
+          item.medicines?.name?.toLowerCase().includes(searchLower),
+        );
+
+      const statusMatch = statusFilter === "all" || order.status === statusFilter;
+
+      return searchMatch && statusMatch;
+    });
+  }, [orders, search, statusFilter]);
+
+  // ---- Pagination (notun) ----
+  const totalPages = Math.max(1, Math.ceil(filteredOrders.length / ITEMS_PER_PAGE));
+  const paginatedOrders = filteredOrders.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE,
+  );
+
+  const resetToFirstPage = () => setPage(1);
 
   const handleStatusChange = async (
     orderId: string,
     status: OrderStatusEnum,
   ) => {
-    // ✅ Change 3: ${paymentStatus} → ${status} (enum-er naam na, actual value dekhabe)
     if (!confirm(`Change status to ${status}?`)) return;
 
     setLoadingId(orderId);
     const toastId = toast.loading("Updating status...");
 
     try {
-      // ✅ Change 4: { paymentStatus: status } → { status }
-      // backend ekhon "status" key khoje, "paymentStatus" na
       const res = await updateOrder(orderId, { status });
       res?.error
         ? toast.error("Update failed", { id: toastId })
@@ -77,6 +112,48 @@ export default function OrderTable({ data, userRole }: Props) {
         </p>
       </div>
 
+      {/* ---- Filter bar (notun) ---- */}
+      <div className="flex flex-wrap gap-3 items-center">
+        <input
+          type="text"
+          placeholder={
+            userRole === "CUSTOMER"
+              ? "Search by medicine..."
+              : "Search by customer or medicine..."
+          }
+          className="border rounded px-3 py-1.5 text-sm w-64"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            resetToFirstPage();
+          }}
+        />
+
+        <Select
+          onValueChange={(value) => {
+            setStatusFilter(value);
+            resetToFirstPage();
+          }}
+          defaultValue="all"
+        >
+          <SelectTrigger className="w-44">
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Statuses</SelectItem>
+            {Object.values(OrderStatusEnum).map((status) => (
+              <SelectItem key={status} value={status}>
+                {status}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <p className="text-sm text-muted-foreground ml-auto">
+          Showing {paginatedOrders.length} of {filteredOrders.length}
+        </p>
+      </div>
+
       <div className="overflow-x-auto rounded-xl border">
         <Table className="min-w-[1000px]">
           <TableHeader>
@@ -95,22 +172,20 @@ export default function OrderTable({ data, userRole }: Props) {
           </TableHeader>
 
           <TableBody>
-            {orders.length ? (
-              orders.map((order, i) => {
+            {paginatedOrders.length ? (
+              paginatedOrders.map((order, i) => {
                 const qty = order?.orderItems?.reduce(
                   (a, b) => a + b.quantity,
                   0,
                 );
 
-                // ✅ Change 5: order.paymentStatus → order.status (order lifecycle status alada field)
                 const isDelivered = order.status === OrderStatusEnum.SHIPPED;
-                // ✅ Change 6: PAID ekhon order.paymentStatus theke check hoy (payment field-e-i thake)
                 const isPaid = order.paymentStatus === "PAID";
                 const isCanceled = order.status === OrderStatusEnum.CANCEL;
 
                 return (
                   <TableRow key={order.id}>
-                    <TableCell>{i + 1}</TableCell>
+                    <TableCell>{(page - 1) * ITEMS_PER_PAGE + i + 1}</TableCell>
 
                     {userRole !== "CUSTOMER" && (
                       <TableCell>{order.customer?.name ?? "N/A"}</TableCell>
@@ -126,14 +201,13 @@ export default function OrderTable({ data, userRole }: Props) {
                       </ul>
                     </TableCell>
 
-                    {/* ✅ Change 7: Payment column e ekhon gateway naam + PAID/UNPAID badge, duitai dekhay */}
                     <TableCell>
                       {order.paymentGateway}{" "}
                       <span
                         className={`ml-1 text-xs rounded-full px-2 py-0.5 ${
                           isPaid
-                            ? "bg-secondary/10 text-secondary"
-                            : "bg-accent/10 text-accent"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-yellow-100 text-yellow-700"
                         }`}
                       >
                         {order.paymentStatus}
@@ -142,7 +216,6 @@ export default function OrderTable({ data, userRole }: Props) {
                     <TableCell>৳ {order.totalPrice}</TableCell>
                     <TableCell>{qty}</TableCell>
 
-                    {/* ✅ Change 8: order.paymentStatus → order.status */}
                     <TableCell className="flex items-center gap-2">
                       <Store size={16} />
                       <span className="capitalize font-medium">
@@ -151,14 +224,13 @@ export default function OrderTable({ data, userRole }: Props) {
                     </TableCell>
 
                     <TableCell className="text-right space-x-2">
-                      {/* CUSTOMER */}
                       {userRole === "CUSTOMER" && (
                         <>
                           {!isCanceled && !isDelivered && !isPaid && (
                             <Button
                               size="sm"
                               variant="outline"
-                              className="text-destructive border-destructive/20 hover:bg-destructive/10"
+                              className="text-red-600 border-red-200 hover:bg-red-50"
                               disabled={loadingId === order.id}
                               onClick={() =>
                                 handleStatusChange(
@@ -178,7 +250,7 @@ export default function OrderTable({ data, userRole }: Props) {
                             >
                               <Button
                                 size="sm"
-                                className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+                                className="bg-green-600 hover:bg-green-700 text-white"
                               >
                                 <Star size={16} className="mr-1" />
                                 Review
@@ -188,7 +260,6 @@ export default function OrderTable({ data, userRole }: Props) {
                         </>
                       )}
 
-                      {/* SELLER — cancel korte parbe na, tai CANCEL filter kore bad deya */}
                       {userRole === "SELLER" && (
                         <select
                           className="border rounded px-2 py-1 text-sm capitalize"
@@ -211,8 +282,6 @@ export default function OrderTable({ data, userRole }: Props) {
                         </select>
                       )}
 
-                      {/* ✅ Change 9: ADMIN er jonno notun dropdown — age eta chilo-i na, 
-                          admin sudhu "Eye" button pেto, status change korte partona */}
                       {userRole === "ADMIN" && (
                         <select
                           className="border rounded px-2 py-1 text-sm capitalize"
@@ -225,7 +294,6 @@ export default function OrderTable({ data, userRole }: Props) {
                             )
                           }
                         >
-                          {/* admin CANCEL soho shob option pay, filter nai */}
                           {Object.values(OrderStatusEnum).map((status) => (
                             <option key={status} value={status}>
                               {status}
@@ -236,7 +304,7 @@ export default function OrderTable({ data, userRole }: Props) {
 
                       <Link href={getViewLink(order.id as string)}>
                         <Button size="icon" variant="outline">
-                          <Eye className="text-primary" size={16} />
+                          <Eye className="text-blue-600" size={16} />
                         </Button>
                       </Link>
                     </TableCell>
@@ -253,6 +321,40 @@ export default function OrderTable({ data, userRole }: Props) {
           </TableBody>
         </Table>
       </div>
+
+      {/* ---- Pagination controls (notun) ---- */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            Previous
+          </Button>
+
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <Button
+              key={i}
+              variant={page === i + 1 ? "default" : "outline"}
+              size="sm"
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

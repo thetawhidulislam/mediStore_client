@@ -21,10 +21,10 @@ import { toast } from "sonner";
 import { createCart } from "@/action/cart.action";
 type Props = {
   medicine: getMedicineData;
-  user: {
-    id: string;
-    cartId: string;
-  };
+  user?: {
+    id?: string;
+    cartId?: string;
+  } | null;
 };
 
 export default function MedicineDetailsPage({ medicine, user }: Props) {
@@ -33,14 +33,15 @@ export default function MedicineDetailsPage({ medicine, user }: Props) {
 
   const handleAddToCart = async (medicineId: string) => {
     const toastId = toast.loading("Adding to cart...");
+    const customerId = user?.id;
 
-    if (!user.id) {
+    if (!customerId) {
       return toast.error("Please login first", { id: toastId });
     }
 
     try {
       const res = await createCart({
-        customerId: user.id,
+        customerId,
         medicineId,
         quantity,
       });

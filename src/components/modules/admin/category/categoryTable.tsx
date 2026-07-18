@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useMemo, useState } from "react";
 import { deleteCategory } from "@/action/category.action";
 import { categoryOption } from "@/constants/categoryData";
 
@@ -19,7 +20,36 @@ type Props = {
   data: { data: categoryOption[] } | null;
 };
 
+const ITEMS_PER_PAGE = 8;
+
 export default function CategoryTable({ data }: Props) {
+  const allCategories = data?.data ?? [];
+
+  // ---- Filter state (notun) ----
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  // ---- Filtered list (notun) ----
+  const filteredCategories = useMemo(() => {
+    const searchLower = search.toLowerCase();
+    return allCategories.filter(
+      (category) =>
+        search === "" ||
+        category.name?.toLowerCase().includes(searchLower) ||
+        category.description?.toLowerCase().includes(searchLower),
+    );
+  }, [allCategories, search]);
+
+  // ---- Pagination (notun) ----
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredCategories.length / ITEMS_PER_PAGE),
+  );
+  const paginatedCategories = filteredCategories.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE,
+  );
+
   const handleDelete = async (id?: string) => {
     if (!id) return;
     if (!confirm("Are you sure you want to delete this category?")) return;
@@ -47,7 +77,7 @@ export default function CategoryTable({ data }: Props) {
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Categories</h2>
           <p className="text-muted-foreground text-sm mt-1">
-            Total Records: {data?.data.length || 0}
+            Total Records: {allCategories.length}
           </p>
         </div>
 
@@ -56,6 +86,24 @@ export default function CategoryTable({ data }: Props) {
             <Plus className="h-4 w-4" /> Add Category
           </Button>
         </Link>
+      </div>
+
+      {/* ---- Filter bar (notun) ---- */}
+      <div className="flex flex-wrap gap-3 items-center">
+        <input
+          type="text"
+          placeholder="Search by name or description..."
+          className="border rounded px-3 py-1.5 text-sm w-72"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+        />
+
+        <p className="text-sm text-muted-foreground ml-auto">
+          Showing {paginatedCategories.length} of {filteredCategories.length}
+        </p>
       </div>
 
       {/* Table Card */}
@@ -81,15 +129,15 @@ export default function CategoryTable({ data }: Props) {
             </TableHeader>
 
             <TableBody>
-              {data?.data.length ? (
-                data.data.map((category, index) => (
+              {paginatedCategories.length ? (
+                paginatedCategories.map((category, index) => (
                   <TableRow
                     key={category.id || index}
                     className="group h-16 hover:bg-muted/20 transition-colors rounded-lg"
                   >
                     {/* Index */}
                     <TableCell className="text-center text-muted-foreground">
-                      {index + 1}
+                      {(page - 1) * ITEMS_PER_PAGE + index + 1}
                     </TableCell>
 
                     {/* Name */}
@@ -111,13 +159,15 @@ export default function CategoryTable({ data }: Props) {
                     {/* Actions */}
                     <TableCell className="text-right pr-8">
                       <div className="flex justify-end gap-2">
-                        <Link href={`/admin-dashboard/category/update/${category.id}`}>
+                        <Link
+                          href={`/admin-dashboard/category/update/${category.id}`}
+                        >
                           <Button
                             size="icon"
                             variant="outline"
-                            className="hover:border-primary"
+                            className="hover:border-blue-500"
                           >
-                            <Pencil className="h-5 w-5 text-primary" />
+                            <Pencil className="h-5 w-5 text-blue-500" />
                           </Button>
                         </Link>
 
@@ -147,6 +197,40 @@ export default function CategoryTable({ data }: Props) {
           </Table>
         </div>
       </div>
+
+      {/* ---- Pagination controls (notun) ---- */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            Previous
+          </Button>
+
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <Button
+              key={i}
+              variant={page === i + 1 ? "default" : "outline"}
+              size="sm"
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

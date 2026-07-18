@@ -36,38 +36,40 @@ export default function MedicineDetails({ data: medicine }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
       {/* Medicine Header */}
-      <div className="flex flex-col lg:flex-row gap-6 bg-white border rounded-xl shadow-md p-6">
+      <div className="flex flex-col lg:flex-row gap-6 bg-card border rounded-xl shadow-md p-6">
         {/* Image */}
-        <div className="flex-shrink-0 w-full lg:w-64 h-64 relative rounded-xl overflow-hidden bg-gray-100">
-          {/* {medicine.image ? (
-            // <Image
-            //   src={medicine.image}
-            //   alt={medicine.name}
-            //   fill
-            //   className="object-cover"
-            // />
+        <div className="flex-shrink-0 w-full lg:w-64 h-64 relative rounded-xl overflow-hidden bg-muted">
+          {medicine.image ? (
+            <Image
+              src={medicine.image}
+              alt={medicine.name}
+              fill
+              className="object-cover"
+            />
           ) : (
-            // <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium">
-            //   No Image
-            // </div>
-          )} */}
+            <div className="w-full h-full flex items-center justify-center text-muted-foreground font-medium">
+              No Image
+            </div>
+          )}
         </div>
 
         {/* Details */}
         <div className="flex-1 flex flex-col justify-between space-y-4">
           <div>
-            <h1 className="text-3xl font-bold">{medicine.name}</h1>
+            <h1 className="text-3xl font-bold text-foreground">
+              {medicine.name}
+            </h1>
             <p className="text-sm text-muted-foreground mt-2">
               {medicine.description}
             </p>
             <div className="flex flex-wrap gap-3 mt-4 text-sm">
-              <span className="bg-gray-100 px-2 py-1 rounded-md">
+              <span className="bg-muted text-foreground px-2 py-1 rounded-md">
                 Price: ৳ {medicine.price}
               </span>
-              <span className="bg-gray-100 px-2 py-1 rounded-md">
+              <span className="bg-muted text-foreground px-2 py-1 rounded-md">
                 Stock: {medicine.stock}
               </span>
-              <span className="bg-gray-100 px-2 py-1 rounded-md">
+              <span className="bg-muted text-foreground px-2 py-1 rounded-md">
                 Manufacturer: {medicine.manufacturer}
               </span>
               <span
@@ -79,7 +81,7 @@ export default function MedicineDetails({ data: medicine }: Props) {
               >
                 {medicine.status}
               </span>
-              <span className="bg-gray-100 px-2 py-1 rounded-md">
+              <span className="bg-muted text-foreground px-2 py-1 rounded-md">
                 Expiry: {new Date(medicine.expiryDate).toLocaleDateString()}
               </span>
             </div>
@@ -88,10 +90,12 @@ export default function MedicineDetails({ data: medicine }: Props) {
       </div>
 
       {/* Seller Info */}
-      <div className="border rounded-xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 bg-white shadow-sm">
-        <h2 className="text-lg font-semibold w-full sm:w-auto">Seller Info</h2>
+      <div className="border rounded-xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 bg-card shadow-sm">
+        <h2 className="text-lg font-semibold w-full sm:w-auto text-foreground">
+          Seller Info
+        </h2>
         <div className="flex items-center gap-4">
-          {/* {medicine.seller.image ? (
+          {medicine.seller?.image ? (
             <Image
               src={medicine.seller.image}
               alt={medicine.seller.name}
@@ -100,14 +104,16 @@ export default function MedicineDetails({ data: medicine }: Props) {
               className="rounded-full object-cover"
             />
           ) : (
-            <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-muted-foreground font-medium">
-              {medicine.seller.name[0]}
+            <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center text-muted-foreground font-medium">
+              {medicine.seller?.name?.[0] ?? "?"}
             </div>
-          )} */}
+          )}
           <div>
-            <p className="font-medium">{medicine.seller.name}</p>
+            <p className="font-medium text-foreground">
+              {medicine.seller?.name}
+            </p>
             <p className="text-sm text-muted-foreground">
-              {medicine.seller.email}
+              {medicine.seller?.email}
             </p>
           </div>
         </div>
@@ -115,7 +121,9 @@ export default function MedicineDetails({ data: medicine }: Props) {
 
       {/* Reviews */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Reviews ({reviews.length})</h2>
+        <h2 className="text-lg font-semibold text-foreground">
+          Reviews ({reviews.length})
+        </h2>
         {reviews.length === 0 && (
           <p className="text-sm text-muted-foreground">No reviews yet.</p>
         )}
@@ -123,10 +131,10 @@ export default function MedicineDetails({ data: medicine }: Props) {
           {reviews.map((review, index) => (
             <div
               key={`${review.id}-${index}`}
-              className="bg-white border rounded-xl p-4 flex flex-col sm:flex-row sm:justify-between gap-4 shadow-sm hover:shadow-md transition"
+              className="bg-card border rounded-xl p-4 flex flex-col sm:flex-row sm:justify-between gap-4 shadow-sm hover:shadow-md transition"
             >
               <div>
-                <p className="font-medium">
+                <p className="font-medium text-foreground">
                   {review.customer?.name || "Unknown"}
                 </p>
                 <p className="text-sm text-muted-foreground">
