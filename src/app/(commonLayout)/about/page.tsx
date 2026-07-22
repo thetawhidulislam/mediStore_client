@@ -68,7 +68,7 @@ export default function AboutPage() {
             Our platform is designed around one principle: buying medicine
             online should never feel uncertain. That means clear seller
             information, honest reviews, and no shortcuts around
-            authenticity checks.
+            authenticity checks
           </p>
           <p>
             As we grow, our goal stays the same — connect more verified
